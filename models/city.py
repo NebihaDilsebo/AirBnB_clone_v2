@@ -2,6 +2,9 @@
 """ City Module for HBNB project """
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
+from sqlalchemy import ForeignKey
+from sqlalchemy.ext.declarative import declarative_base
+from models.place import Place
 from models.base_model import BaseModel, Base
 
 
