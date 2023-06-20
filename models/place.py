@@ -53,7 +53,7 @@ class Place(BaseModel, Base):
                 review = shlex.split(review)
                 if (review[0] == 'Review'):
                     listb.append(var[key])
-            for elem in lista:
+            for elem in listb:
                 if (elem.place_id == self.id):
                     result.append(elem)
             return (result)
