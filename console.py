@@ -124,7 +124,7 @@ class HBNBCommand(cmd.Cmd):
         if class_name not in self.classes:
             print("** class doesn't exist **")
             return
-        
+
         params = {}
         for param in args[1:]:
             split_param = param.split('=')
@@ -144,7 +144,7 @@ class HBNBCommand(cmd.Cmd):
         instance = self.classes[class_name](**params)
         instance.save()
         print(instance.id)
-    
+
     def help_create(self):
         """ Help information for the create method """
         print("Creates a class of any type")
