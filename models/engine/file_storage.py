@@ -21,7 +21,7 @@ class FileStorage:
         If a class is specified, it returns a dictionary containing only the
         objects of that class.
         """
-       if cls is not None:
+        if cls is not None:
             return {k: v for k, v in self.__objects.items() if isinstance(v, cls)}
         return self.__objects
 
