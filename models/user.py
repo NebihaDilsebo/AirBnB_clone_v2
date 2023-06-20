@@ -15,10 +15,10 @@ from models.review import Review
 class User(BaseModel, Base):
     """This class defines the User model for the database table 'users'.
     attributes:
-            email = 'email address'
-            password = 'password for you login'
-            first_name = 'first name'
-            last_name = 'last name'
+            email : email address
+            password : password for you login
+            first_name : first name
+            last_name : last name
     """
 
     __tablename__ = 'users'
