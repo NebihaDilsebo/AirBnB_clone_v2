@@ -4,13 +4,13 @@ This module defines the User class, which inherits from BaseModel and Base.
 It represents a user in the AirBnB clone project.
 """
 
-#import os
+import os
 from sqlalchemy import Column, String
-#from sqlalchemy.orm import relationship
-#from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
+from sqlalchemy.ext.declarative import declarative_base
 from models.base_model import BaseModel, Base
-#from models.place import Place
-#from models.review import Review
+from models.place import Place
+from models.review import Review
 
 
 class User(BaseModel, Base):
@@ -28,6 +28,11 @@ class User(BaseModel, Base):
     first_name = Column(String(128), nullable=True)
     last_name = Column(String(128), nullable=True)
 
-    def __init__(self, *args, **kwargs):
+    '''def __init__(self, *args, **kwargs):
         """Initializes a new User instance."""
         super().__init__(*args, **kwargs)
+    '''
+    places = relationship("Place", cascade='all, delete, delete-orphan',
+                          backref="user")
+    reviews = relationship("Review", cascade='all, delete, delete-orphan',
+                           backref="user")
