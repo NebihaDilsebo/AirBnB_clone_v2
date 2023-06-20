@@ -27,7 +27,7 @@ class BaseModel:
     updated_at = Column(DATETIME,
                         nullable=False,
                         default=datetime.utcnow())
-        id (sqlalchemy string): 
+    id (sqlalchemy string): 
     
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
