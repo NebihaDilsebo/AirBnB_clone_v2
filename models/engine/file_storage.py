@@ -23,7 +23,7 @@ class FileStorage:
         """
         if cls is not None:
             return {k: v for k, v in self.__objects.items()
-                     if isinstance(v, cls)}
+                    if isinstance(v, cls)}
         return self.__objects
 
     def new(self, obj):
