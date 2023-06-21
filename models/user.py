@@ -15,8 +15,8 @@ from models.review import Review
 class User(BaseModel, Base):
     """This class defines the User model for the database table 'users'.
     attributes:
-            email : email address
-            password : password for you login
+            email : your email address
+            password : your password 
             first_name : first name
             last_name : last name
     """
