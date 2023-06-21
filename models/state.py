@@ -1,18 +1,20 @@
 #!/usr/bin/python3
-"""This is the state class"""
-from sqlalchemy.ext.declarative import declarative_base
+"""This module defines the State class."""
+import os
+import models
 from models.base_model import BaseModel, Base
+
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from sqlalchemy import Column, Integer, String
-import models
+
 from models.city import City
 import shlex
 
 
 class State(BaseModel, Base):
-    """This is the class for State
-    Attributes:
-        name: input name
+    """This class defines the State model for the database table 'states'.
+    State inherits from BaseModel and Base (respect the order).
     """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
@@ -21,15 +23,16 @@ class State(BaseModel, Base):
 
     @property
     def cities(self):
-        var = models.storage.all()
+        """Returns the cities in this State."""
+        val = models.storage.all()
         lista = []
         result = []
-        for key in var:
+        for key in val:
             city = key.replace('.', ' ')
             city = shlex.split(city)
             if (city[0] == 'City'):
-                lista.append(var[key])
-        for elem in lista:
-            if (elem.state_id == self.id):
-                result.append(elem)
+                lista.append(val[key])
+        for elemt in lista:
+            if (elemt.state_id == self.id):
+                result.append(elemt)
         return (result)
