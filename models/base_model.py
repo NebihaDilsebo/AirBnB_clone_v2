@@ -26,15 +26,7 @@ class BaseModel:
     updated_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
 
     def __init__(self, *args, **kwargs):
-        """Instantiation of base model class
-        Args:
-            args: it won't be used
-            kwargs: arguments for the constructor of the BaseModel
-        Attributes:
-            id: unique id generated
-            created_at: creation date
-            updated_at: updated date
-        """
+        """Instantiation of base model class."""
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -52,7 +44,7 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
-        """returns a string of class name, id, and dictionary."""
+        """Returns a string representation of the instance."""
         return "[{}] ({}) {}".format(
             type(self).__name__, self.id, self.__dict__)
 
@@ -61,25 +53,23 @@ class BaseModel:
         return self.__str__()
 
     def save(self):
-        """updates the public instance attribute updated_at to current
+        """
+        Updates updated_at with current time when instance is changed
         """
         self.updated_at = datetime.now()
         models.storage.new(self)
         models.storage.save()
 
     def to_dict(self):
-        """
-        creates dictionary of the class  and returns
-        returns a dictionary of all the key values in __dict__
-        """
-        my_dict = dict(self.__dict__)
-        my_dict["__class__"] = str(type(self).__name__)
-        my_dict["created_at"] = self.created_at.isoformat()
-        my_dict["updated_at"] = self.updated_at.isoformat()
-        if '_sa_instance_state' in my_dict.keys():
-            del my_dict['_sa_instance_state']
-        return my_dict
+        """Convert instance into dict format."""
+        new_dict = dict(self.__dict__)
+        new_dict["__class__"] = str(type(self).__name__)
+        new_dict["created_at"] = self.created_at.isoformat()
+        new_dict["updated_at"] = self.updated_at.isoformat()
+        if '_sa_instance_state' in new_dict.keys():
+            del new_dict['_sa_instance_state']
+        return new_dict
 
     def delete(self):
-        """ delete object """
+        """ Deletes this BaseModel instance from the storage"""
         models.storage.delete(self)
