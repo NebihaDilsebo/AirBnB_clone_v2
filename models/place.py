@@ -1,7 +1,8 @@
 #!/usr/bin/python3
 
-"""This module defines the Place class, which inherits from BaseModel and Base.
-It represents a place in the AirBnB clone project.
+"""
+This module defines the Place class, which inherits from BaseModel 
+and Base.It represents a place in the AirBnB clone project.
 """
 from os import getenv
 import models
