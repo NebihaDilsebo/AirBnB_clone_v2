@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 """
-This module defines the Place class, which inherits from BaseModel 
+This module defines the Place class, which inherits from BaseModel
 and Base.It represents a place in the AirBnB clone project.
 """
 from os import getenv
@@ -13,7 +13,6 @@ from models.amenity import Amenity, place_amenity
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
-
 
 
 class Place(BaseModel, Base):
