@@ -4,6 +4,7 @@ This module defines the User class, which inherits from BaseModel and Base.
 It represents a user in the AirBnB clone project.
 """
 
+import os
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
