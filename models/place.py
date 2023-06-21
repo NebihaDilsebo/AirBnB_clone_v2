@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
+
 """This is the place class"""
 from models.base_model import BaseModel, Base
 from models.review import Review
@@ -97,4 +97,3 @@ class Place(BaseModel, Base):
 
             if type(value) == Amenity:
                 self.amenity_ids.append(value.id)
-
