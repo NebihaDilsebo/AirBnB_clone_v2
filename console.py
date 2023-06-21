@@ -1,6 +1,8 @@
 #!/usr/bin/python3
 """ Console Module """
 import cmd
+from shlex import split
+from models import storage
 import sys
 import re
 import os
