@@ -4,6 +4,8 @@ from models.place import place_amenity
 from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 
+def some_function():
+    from models.place import place_amenity
 
 class Amenity(BaseModel, Base):
     """Amenity class for storing amenity information"""
