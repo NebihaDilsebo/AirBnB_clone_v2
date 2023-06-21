@@ -1,20 +1,23 @@
 #!/usr/bin/python3
 
-"""This is the place class"""
+"""This module defines the Place class, which inherits from BaseModel and Base.
+It represents a place in the AirBnB clone project.
+"""
+from os import getenv
+import models
 from models.base_model import BaseModel, Base
 from models.review import Review
 from models.amenity import Amenity, place_amenity
-from os import getenv
+
+from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, String, Integer, Float, ForeignKey
 from sqlalchemy.orm import relationship
-import models
+
 
 
 class Place(BaseModel, Base):
-    """Represents a Place for a MySQL database.
-
+    """This class defines the Place model for the database table 'places'.
     Inherits from SQLAlchemy Base and links to the MySQL table places.
-
     Attributes:
         __tablename__ (str): The name of the MySQL table to store places.
         city_id (sqlalchemy String): The place's city id.
