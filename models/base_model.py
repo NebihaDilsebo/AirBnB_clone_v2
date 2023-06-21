@@ -1,18 +1,25 @@
 #!/usr/bin/python3
-"""This is the base model class for AirBnB"""
-from sqlalchemy.ext.declarative import declarative_base
+"""This module defines a base class for all models in our hbnb clone"""
+
 import uuid
 import models
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy.ext.declarative import declarative_base
 
-
+"""
+Remove the inheritance of BaseModel from Base.
+The BaseModel class should now inherit directly from object.
+"""
 Base = declarative_base()
 
 
 class BaseModel:
     """This class will defines all common attributes/methods
-    for other classes
+    Attributes
+        id: to represents the id
+        created_at: to represents a column containing a datetime
+        updated_at: to represents the updated date time.
     """
     id = Column(String(60), unique=True, nullable=False, primary_key=True)
     created_at = Column(DateTime, nullable=False, default=(datetime.utcnow()))
@@ -45,16 +52,12 @@ class BaseModel:
             self.created_at = self.updated_at = datetime.now()
 
     def __str__(self):
-        """returns a string
-        Return:
-            returns a string of class name, id, and dictionary
-        """
+        """returns a string of class name, id, and dictionary."""
         return "[{}] ({}) {}".format(
             type(self).__name__, self.id, self.__dict__)
 
     def __repr__(self):
-        """return a string representaion
-        """
+        """return a string representaion"""
         return self.__str__()
 
     def save(self):
@@ -65,9 +68,9 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """creates dictionary of the class  and returns
-        Return:
-            returns a dictionary of all the key values in __dict__
+        """
+        creates dictionary of the class  and returns
+        returns a dictionary of all the key values in __dict__
         """
         my_dict = dict(self.__dict__)
         my_dict["__class__"] = str(type(self).__name__)
@@ -78,6 +81,5 @@ class BaseModel:
         return my_dict
 
     def delete(self):
-        """ delete object
-        """
+        """ delete object """
         models.storage.delete(self)
