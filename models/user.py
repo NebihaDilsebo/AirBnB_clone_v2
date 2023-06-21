@@ -16,7 +16,7 @@ class User(BaseModel, Base):
     """This class defines the User model for the database table 'users'.
     attributes:
             email : your email address
-            password : your password 
+            password : your password
             first_name : first name
             last_name : last name
     """
