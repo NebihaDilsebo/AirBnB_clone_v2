@@ -136,7 +136,7 @@ class HBNBCommand(cmd.Cmd):
         print(new_instance.id)
 
     def help_create(self):
-        """ Help information for the create method 
+        """ Help information for the create method
         ignored_attrs = ('id', 'created_at', 'updated_at', '__class__')
         class_name = ''
         name_pattern = r'(?P<name>(?:[a-zA-Z]|_)(?:[a-zA-Z]|\d|_)*)'
