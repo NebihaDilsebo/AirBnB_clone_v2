@@ -115,27 +115,47 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def do_create(self, args):
-        """ Create an object of any class"""
-        try:
-            if not args:
-                raise SyntaxError()
-            arg_list = args.split(" ")
-            kw = {}
-            for arg in arg_list[1:]:
-                arg_splited = arg.split("=")
-                arg_splited[1] = eval(arg_splited[1])
-                if type(arg_splited[1]) is str:
-                    arg_splited[1] = arg_splited[1].replace(
-                                "_", " ").replace('"', '\\"')
-                kw[arg_splited[0]] = arg_splited[1]
-        except SyntaxError:
+    def do_create(self, arg):
+        """Creates a new instance of a class with given parameters."""
+        if not arg:
             print("** class name missing **")
-        except NameError:
-            print("** class doesn't exist **")
-        new_instance = HBNBCommand.classes[arg_list[0]](**kw)
-        new_instance.save()
-        print(new_instance.id)
+            return
+
+    args = arg.split()
+    class_name = args[0]
+    valid_params = {}
+    for param in args[1:]:
+        if "=" in param:
+            key, value = param.split("=", 1)
+            if value.startswith('"') and value.endswith('"'):
+                # String value
+                value = value[1:-1].replace('_', ' ')
+            elif '.' in value and all(char.isdigit() for char in value.replace('.', '', 1)):
+                # Float value
+                try:
+                    value = float(value)
+                except ValueError:
+                    continue
+            elif value.isdigit():
+                # Integer value
+                value = int(value)
+            else:
+                # Invalid value, skip parameter
+                continue
+
+            valid_params[key] = value
+
+            if len(valid_params) == 0:
+                print("** invalid parameters **")
+                return
+
+            if class_name not in self.classes:
+                print("** class doesn't exist **")
+                return
+
+    new_instance = self.classes[class_name](**valid_params)
+    new_instance.save()
+    print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
