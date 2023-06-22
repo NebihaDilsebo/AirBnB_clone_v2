@@ -28,6 +28,7 @@ class FileStorage:
         if cls is None:
             return self.__objects.values()
         return [obj for obj in self.__objects.values() if isinstance(obj, cls)]
+
     def new(self, obj):
         """sets __object to given obj
         Args:
@@ -65,6 +66,7 @@ class FileStorage:
         if obj is not None:
             key = "{}.{}".format(type(obj).__name__, obj.id)
             self.__objects.pop(key, None)
+
     def close(self):
         """ calls reload()
         """
