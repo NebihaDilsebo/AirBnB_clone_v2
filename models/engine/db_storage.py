@@ -1,47 +1,42 @@
 #!/usr/bin/python3
-""" This module defines a class to manage database storage for hbnb clone.
-"""
+"""This module defines a class to manage db storage for hbnb clone"""
 from os import getenv
-from sqlalchemy import (create_engine)
-from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
-
+import models
 from models.base_model import Base
-from models.state import State
+from models.base_model import BaseModel
+from models.amenity import Amenity
 from models.city import City
-from models.user import User
 from models.place import Place
 from models.review import Review
-from models.amenity import Amenity
+from models.state import State
+from models.user import User
 
 
 class DBStorage:
-    """ This class manages storage of hbnb models in a SQL database.
-    Private class attributes:
-        __engine: the engine
-        __session: the session
-    """
+    """SQL database storage"""
     __engine = None
     __session = None
 
     def __init__(self):
-        """Initializes the SQL database storage."""
+        """Create engine and connect to database"""
         user = getenv("HBNB_MYSQL_USER")
-        passwd = getenv("HBNB_MYSQL_PWD")
-        db = getenv("HBNB_MYSQL_DB")
+        pwd = getenv("HBNB_MYSQL_PWD")
         host = getenv("HBNB_MYSQL_HOST")
-        env = getenv("HBNB_ENV")
+        db = getenv("HBNB_MYSQL_DB")
+        envv = getenv("HBNB_ENV", "none")
 
-        """ to create the engine."""
-        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'
-                                      .format(user, passwd, host, db),
-                                      pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(
+            user, pwd, host, db), pool_pre_ping=True)
 
-        if env == "test":
+        if envv == 'test':
             Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage
+        """returns a dictionary
+        Return:
+            returns a dictionary of __object
         """
         dic = {}
         if cls:
@@ -61,29 +56,26 @@ class DBStorage:
         return (dic)
 
     def new(self, obj):
-        """add the object to the current database session."""
+        """add the object to the current database session"""
         self.__session.add(obj)
 
     def save(self):
-        """commit all changes of the current database session."""
+        """commit all changes of the current database session"""
         self.__session.commit()
 
     def delete(self, obj=None):
-        """delete from the current database session."""
-        if obj:
-            self.session.delete(obj)
+        """delete from the current database session obj if not None"""
+        if obj is not None:
+            self.__session.delete(obj)
 
     def reload(self):
-        """
-        create all tables in the database (feature of SQLAlchemy)
-        (WARNING: all classes who inherit from Base must be imported
-        before calling Base.metadata.create_all(engine))
-        """
-        Base.metadata.create_all(self.__engine)
-        sess = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        Session = scoped_session(sess)
+        """Create current database session from the engine
+        using a sessionmaker"""
+        self.__session = Base.metadata.create_all(self.__engine)
+        factory = sessionmaker(bind=self.__engine, expire_on_commit=False)
+        Session = scoped_session(factory)
         self.__session = Session()
 
     def close(self):
-        """ calls remove()."""
+        """Remove session"""
         self.__session.close()
